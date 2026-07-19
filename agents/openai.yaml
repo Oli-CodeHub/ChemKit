@@ -1,0 +1,7 @@
+interface:
+  display_name: "ChemKit"
+  short_description: "Draw RDKit ACS-style chemical schemes"
+  default_prompt: "Use $chemkit to draw a publication-style RDKit reaction scheme from my chemistry input."
+
+policy:
+  allow_implicit_invocation: true
