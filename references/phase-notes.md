@@ -1,5 +1,36 @@
 # Phase Notes
 
+## 2026-08-19: Fixed-Scale ACS Rendering and Dual-Fragment Couplings
+
+The FAT amide-coupling comparison exposed two reusable failures. First,
+RDKit shrank the wider product when molecules were drawn into different
+small placement boxes: reactant effective bonds were 36.0 px while the
+product was 33.1 px despite identical 1.5-unit coordinates. Second, matching
+only the aryl MCS preserved FAT-2a orientation but rotated the conserved
+cyclobutane-carbonyl fragment from FAT-1a.
+
+The reusable correction is now:
+
+- draw all molecules on one shared large temporary canvas at fixed scale;
+- crop actual SVG content and translate only;
+- record effective rendered bond length and keep route variation near 1-2%;
+- use the compact ACS profile: Arial Bold, 25.5 px fixed bond length
+  (about 38.25 px effective bond), 2.05 px bond width, 26 px atom labels,
+  25 px condition text, 25 px structure labels, 18% multiple-bond spacing,
+  and 0.03 label padding;
+- size typography against the effective rendered bond rather than the raw
+  RDKit setting; the compact optical targets are about 0.68 atom-font,
+  0.65 condition-font, and 0.65 structure-label per effective bond;
+- render arrow markers with `markerUnits="userSpaceOnUse"` so the specified
+  arrowhead dimensions remain true pixels when shaft width changes;
+- calculate plus signs and reaction arrows from final molecule bboxes:
+  plus signs use the midpoint of the visible reactant gap, while arrows use
+  symmetric left/right clearances in the reactant-product gap;
+- anchor the shared 25 px structure-label baseline 35 px below the lowest
+  molecule bbox edge; derive canvas height from that baseline plus padding;
+- for couplings, construct the product from both reactant coordinate
+  fragments so each conserved scaffold retains its displayed orientation.
+
 ## 2026-06-25: RDKit Reaction Scheme Layout
 
 Current goal: use RDKit to produce ACS/ChemDraw-like reaction scheme

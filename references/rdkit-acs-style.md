@@ -8,22 +8,20 @@ adjustments may still be needed per-route.
 ## RDKit Drawing Defaults
 
 - Black-and-white atom palette.
-- Use **Arial Black** when available via RDKit `MolDrawOptions.fontFile`:
-  `/System/Library/Fonts/Supplemental/Arial Black.ttf`. Arial Bold reads
-  too thin next to the bold structure label; Arial Black matches
-  ChemDraw's perceived weight.
-- `bondLineWidth`: start around `1.6`.
-- `fixedBondLength`: start around `17`.
-- `fixedFontSize`: start around `16`; use `18` for sparse/simple routes
-  where atom labels need more visual weight. The user explicitly
-  rejected the smaller 11–12 px range — atom labels in route figures
-  should be visually as large as or larger than the surrounding
-  condition text.
+- Use **Arial Bold** for the compact ChemDraw/ACS profile via RDKit
+  `MolDrawOptions.fontFile`:
+  `/System/Library/Fonts/Supplemental/Arial Bold.ttf`.
+- `bondLineWidth`: start around `2.05`.
+- `fixedBondLength`: start around `25.5`.
+- `fixedFontSize`: start around `26`.
 - `minFontSize` / `maxFontSize`: pin to the same value as
   `fixedFontSize` so RDKit does not silently shrink atom labels.
-- `multipleBondOffset`: start around `0.16`.
-- `padding`: start around `0.02`.
-- `additionalAtomLabelPadding`: start around `0.02`.
+- `multipleBondOffset`: start around `0.18`.
+- `padding`: start around `0.01`.
+- `additionalAtomLabelPadding`: start around `0.03`. Check the visible
+  terminal-bond length after rendering; bonds leading to `CN`, `NH₂`,
+  `OH`, and similar labels should normally retain about 80-90% of an
+  unlabelled ring bond's visible length.
 - `singleColourWedgeBonds`: `True`.
 - `scaleBondWidth`: `False` (so line widths stay readable when the canvas is scaled).
 - RDKit dashed wedge bonds are emitted as multiple short line segments
@@ -36,9 +34,39 @@ adjustments may still be needed per-route.
   `RouteStyle` there rather than reimplementing RDKit drawing settings.
 - For screenshot-like compact ChemDraw schemes, use
   `chemdraw_compact_style()` as the starting profile. It uses fixed
-  bond length around 20 px, 18 px atom labels, tighter molecule padding,
-  and a lighter SVG text stroke so labels stay bold without becoming
-  blocky.
+  bond length around 25.5 px, 26 px Arial Bold atom labels, 2.05 px bonds,
+  25 px condition text, 25 px structure labels, 18% multiple-bond spacing,
+  and no artificial text outline.
+
+## Fixed Effective Scale
+
+`fixedBondLength` is not sufficient when each molecule is drawn inside a
+different small canvas: RDKit may shrink a wider product to fit. Draw all
+molecules on the same large temporary canvas, compute the actual path/glyph
+bbox, and place the cropped content without scaling. Use
+`draw_mol_svg_at_fixed_scale()` for reusable route work.
+
+Record or inspect `data-effective-bond-length` in the final SVG. Across one
+route, unlabelled bond lengths should agree within about 1-2%. Do not compare
+only coordinate-space bond lengths; the rendered SVG is the quality gate.
+
+Typography is also calibrated against this **effective** bond length. RDKit's
+usual 1.5-coordinate bond means `fixedBondLength=25.5` renders near 38.25 px;
+the font sizes are not multiplied by 1.5. For a ChemDraw-like compact route,
+start near these optical ratios: atom font/effective bond `0.68`, condition
+font/effective bond `0.65`, structure label/effective bond `0.65`, and bond
+stroke/effective bond `0.054`. This prevents structures from looking correct
+while every text tier remains undersized.
+
+Only consider a 1.05-1.08 visual expansion for three- or four-membered rings
+after fixed-scale rendering has been verified. Do not use ring compensation
+to hide whole-molecule auto-scaling.
+
+When a reaction-specific ring template is used, validate its geometry as well
+as its bond lengths. A cyclobutane template should have four equal sides and
+approximately 90° internal angles; an equal-sided 60°/120° rhombus is not an
+acceptable substitute. Reuse the exact same ring coordinates in reactant and
+product when that ring is conserved.
 
 ## Atom Label Subscripts
 
@@ -72,23 +100,19 @@ outlines, not as `<text>`, so a regex replacement never matches.
 ## SVG `<text>` for Conditions and Labels
 
 Conditions and structure labels (S1/S2/S3) are written as SVG `<text>`
-elements, not RDKit paths. To make them visually match the bold atom
-labels in every renderer (including sips / Quick Look / Preview.app,
-which ignore web font weights), apply both:
+elements, not RDKit paths. The compact profile uses:
 
 ```css
 text {
-  font-family: "Arial Black", "Arial Bold", Arial, Helvetica, sans-serif;
-  font-weight: 900;
+  font-family: "Arial Bold", Arial, Helvetica, sans-serif;
+  font-weight: 700;
   fill: #000;
-  stroke: #000;
-  stroke-width: 0.35;
-  paint-order: stroke fill;
+  stroke-width: 0;
 }
 ```
 
-The `stroke` + `paint-order` trick fattens the glyph even when the
-renderer falls back to a non-black system font.
+Do not add an outline merely to compensate for a renderer fallback; it
+makes route text blockier than ChemDraw atom labels.
 
 ## Multi-line Condition Blocks
 

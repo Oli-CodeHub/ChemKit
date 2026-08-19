@@ -1,7 +1,8 @@
-# ChemKit
+# ChemKit 1.0
 
-ChemKit is a Codex skill and RDKit-based drawing toolkit for generating
-publication-style chemical reaction schemes.
+ChemKit 1.0 is a Codex skill and RDKit-based drawing toolkit for generating
+publication-style chemical reaction schemes with ChemDraw/ACS-like visual
+proportions.
 
 The project started from a practical pain point: ChemDraw is excellent,
 but manual scheme layout is slow; RDKit is programmable, but raw output
@@ -19,18 +20,20 @@ chemical drawing preferences into reusable rendering rules.
 - Strengthens dashed wedge stereochemical bonds so they remain readable in PNG exports.
 - Provides examples and scripts for reusable scheme generation.
 
-## Current Status
+## Version 1.0
 
-ChemKit is an early personal research workflow, not a polished package.
-It is useful as:
+ChemKit 1.0 is the first stable release of the reusable route-rendering
+workflow. It is designed for:
 
-- a Codex skill for chemistry drawing tasks;
-- a reference implementation for RDKit route layout rules;
-- a starting point for natural-language-to-reaction drawing workflows;
-- a small showcase of how agent workflows can encode domain-specific taste.
+- publication-style reaction schemes generated from RDKit structures;
+- ChemDraw-like route layout with fixed effective bond scale;
+- consistent atom labels, condition text, structure labels, arrows, and route spacing;
+- screenshot-derived structure redraws with explicit QC and confidence checks;
+- reusable SVG/PNG examples and route-generation scripts.
 
-OCSR/image recognition experiments are documented, but not enabled as the
-default public workflow.
+The 1.0 renderer is the default workflow. OCSR/image-recognition experiments
+remain documented as optional tooling and are not required for ordinary route
+generation.
 
 ## Quick Start
 
@@ -42,10 +45,10 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Generate an example scheme:
+Generate an example scheme with the 1.0 renderer:
 
 ```bash
-python scripts/draw_route_citronellal_terminal_methyl_oxidation.py
+python scripts/draw_route_fat_amide_coupling.py
 ```
 
 Outputs are written to `examples/`.
@@ -66,7 +69,8 @@ http://127.0.0.1:8765/
 
 The web backend can optionally use an OpenAI-backed parser when
 `OPENAI_API_KEY` is set. Without it, ChemKit falls back to a small local
-rule parser.
+rule parser. The web prototype uses the same ChemKit 1.0 route-rendering
+rules.
 
 ## Project Layout
 
@@ -80,6 +84,11 @@ social/                          Xiaohongshu promo-card generator and assets
 agents/                          Experimental agent metadata
 ```
 
+## Release
+
+The current release is **ChemKit 1.0**. See [CHANGELOG.md](CHANGELOG.md) for
+the release summary and migration notes from the original prototype.
+
 ## License
 
 ChemKit is shared for learning, personal research, and non-commercial
@@ -92,4 +101,3 @@ See `LICENSE` for details.
 
 If ChemKit helps your own workflow, please keep attribution to the original
 project and author in redistributed materials.
-
