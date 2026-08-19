@@ -26,25 +26,35 @@ chemical information and then redraws it in the user's own style. It
 does not pixel-copy another figure's layout unless the user explicitly
 asks for a temporary diagnostic layout replica.
 
-## User-Confirmed Style Targets (June 2026)
+## User-Confirmed Style Targets (August 2026)
 
 The defaults below have been validated against the user's own ChemDraw
 output. Treat them as the starting point for every new route; only
 deviate with a reason.
 
-- **Bold atom labels are larger than surrounding route text**. Use
-  RDKit `fixedFontSize` 16 as the default and 18 for sparse/simple
-  routes where heteroatom labels need more visual weight. Condition
-  text and structure labels default to 14 px.
-- **Arial Black** for atom labels and for SVG `<text>`. Set RDKit
+- **ChemDraw/ACS proportions come before absolute pixel sizes**. Calibrate
+  typography against the final rendered bond, not the RDKit
+  `fixedBondLength` setting. The compact profile uses an effective bond
+  near 38.25 px (25.5 × the usual 1.5-coordinate bond), 2.05 px bonds,
+  26 px atom labels, 25 px condition text, 25 px structure labels, and
+  18% multiple-bond spacing.
+- **Arial Bold** is the compact-profile atom and route font. Set RDKit
   `MolDrawOptions.fontFile` to
-  `/System/Library/Fonts/Supplemental/Arial Black.ttf` when available.
-  Pair SVG route text with `font-weight: 900; stroke: #000;
-  stroke-width: 0.35; paint-order: stroke fill;` so the bold weight
-  survives in sips / Quick Look / Preview.app.
+  `/System/Library/Fonts/Supplemental/Arial Bold.ttf` when available;
+  use weight 700 route text without an artificial outline.
+- **Never let a molecule's placement box rescale it.** Draw every
+  molecule on the same large temporary canvas at fixed scale, crop from
+  its actual SVG bbox, and translate only. Effective unlabelled bond
+  lengths across a route should agree within about 1-2%.
 - **Structure labels share a single horizontal baseline**, anchored to
-  the bottom of the tallest structure in the route. Do not place each
-  label relative to its own structure's bottom.
+  the bottom of the tallest structure in the route. In the compact
+  profile, put the baseline 35 px below that visible edge so 25 px labels
+  retain clear white space. Do not place each label relative to its own
+  structure's bottom.
+- **Place route operators from visible molecule bboxes.** A plus sign is
+  centered in the actual horizontal gap between two reactants. Center the
+  arrow in the gap between the final reactant and product, with symmetric
+  clearances, instead of using hand-tuned x-coordinates.
 - **Subscript digits in chemical formulas** (`Et₃N`, `NiCl₂`,
   `Et₄NBr`) are entered as Unicode subscript characters (`\u2082`,
   `\u2083`, `\u2084`), both in SMILES and in condition strings. Avoid
@@ -57,9 +67,17 @@ deviate with a reason.
   try to post-process the SVG to swap `*` → `R`.
 - For compact one-row paper schemes, prefer
   `chemdraw_compact_style()` from `scripts/chemkit_route_renderer.py`:
-  larger fixed atom labels, fixed bond length around 20 px, thinner SVG
-  text stroke, tighter molecule padding, and condition text above/below
-  the arrow as a single visual block.
+  26 px Arial Bold atom labels, fixed bond length around 25.5 px, 2.05 px
+  bonds, 25 px condition text, 25 px structure labels, no artificial text
+  outline, and conditions above/below the arrow as a single visual block.
+  Place those conditions with
+  `condition_labels_for_arrow()`; it anchors the nearest upper baseline
+  20 px above the arrow in the compact profile so multi-line blocks do
+  not float too high.
+- For coupling products assembled from two visible reactant fragments,
+  preserve both fragment orientations. Copy each reactant fragment's 2D
+  coordinates into the product and join them at the new bond instead of
+  matching only one MCS and globally rotating the product.
 
 See `references/rdkit-acs-style.md`, `references/reaction-layout-rules.md`,
 and `references/phase-notes.md` for the full rationale and edge cases.

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1100" viewBox="0 0 1800 1100">
+<rect width="100%" height="100%" fill="white"/>
+<style>
+text { font-family: "Arial Bold", Arial, Helvetica, sans-serif; font-weight: 700; fill: #000; stroke: none; }
+.condition { font-size: 25px; }
+.caption { font-size: 25px; }
+.arrow { stroke: #000; stroke-width: 2.1; fill: none; stroke-linecap: square; }
+</style>
+<defs><marker id="arrowhead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="11" refX="17.7" refY="5.5" orient="auto"><polygon points="0 0, 18 5.5, 0 11" fill="#000"/></marker></defs>
+<image href="20260819-taxol-10dab-stress-crops/dab.png" x="75.2" y="76.5" width="449.5" height="287.1"/>
+<image href="20260819-taxol-10dab-stress-crops/protected.png" x="1228.9" y="74.3" width="442.2" height="291.4"/>
+<image href="20260819-taxol-10dab-stress-crops/beta_lactam.png" x="800.0" y="424.4" width="200.1" height="171.1"/>
+<image href="20260819-taxol-10dab-stress-crops/side_chain.png" x="692.4" y="761.5" width="255.2" height="176.9"/>
+<image href="20260819-taxol-10dab-stress-crops/final_taxane.png" x="1228.9" y="704.3" width="442.2" height="291.4"/>
+<line class="arrow" x1="675.0" y1="220.0" x2="1085.0" y2="220.0" marker-end="url(#arrowhead)"/>
+<text class="condition" x="880.0" y="142.0" font-size="25.0" text-anchor="middle">1. TESCl, Py</text>
+<text class="condition" x="880.0" y="169.0" font-size="25.0" text-anchor="middle">2. AcCl, Py</text>
+<text class="condition" x="880.0" y="280.0" font-size="25.0" text-anchor="middle">74%</text>
+<text class="condition" x="880.0" y="307.0" font-size="25.0" text-anchor="middle">2 steps</text>
+<line class="arrow" x1="1450.0" y1="355.0" x2="1450.0" y2="720.0" marker-end="url(#arrowhead)"/>
+<text class="condition" x="1510.0" y="490.0" font-size="25.0" text-anchor="start">A, DMAP</text>
+<text class="condition" x="1510.0" y="517.0" font-size="25.0" text-anchor="start">Py; 92%</text>
+<line class="arrow" x1="560.0" y1="850.0" x2="280.0" y2="850.0" marker-end="url(#arrowhead)"/>
+<text class="condition" x="420.0" y="790.0" font-size="25.0" text-anchor="middle">0.5% HCl</text>
+<text class="condition" x="420.0" y="915.0" font-size="25.0" text-anchor="middle">90%</text>
+<text class="caption" x="300.0" y="515.0" font-size="25.0" text-anchor="middle">10-deacetylbaccatin III</text>
+<text class="caption" x="300.0" y="542.0" font-size="25.0" text-anchor="middle">(10-DAB)</text>
+<text class="caption" x="900.0" y="655.0" font-size="25.0" text-anchor="middle">A</text>
+<text class="caption" x="165.0" y="865.0" font-size="25.0" text-anchor="middle">(-)-Taxol</text>
+</svg>
