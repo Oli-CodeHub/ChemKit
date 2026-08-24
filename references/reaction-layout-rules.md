@@ -19,6 +19,54 @@ a reason.
 - Leave clear whitespace between structures, plus signs, arrow, and
   condition text.
 
+## Route Semantics and Wrapped Rows
+
+- Before placing anything, write a route manifest containing nodes, directed
+  edges, condition ownership, mixture markers, and row breaks. Do not infer an
+  edge from the eventual x/y alignment alone.
+- A bracketed condition spanning two structures belongs to the directed edge
+  indicated by the bracket arrow. For example, a DMP bracket spanning II-2 and
+  II-3 means II-2 → II-3; it is not a free-standing side arrow from II-3.
+- A new row that begins with an arrow at the left is a horizontal continuation
+  of the previous route. Keep the chemical edge in the manifest and draw the
+  continuation arrow left-to-right; do not substitute a vertical arrow simply
+  because the previous product is above the next intermediate.
+- Keep mixture symbols separate from reaction edges. A `+` between II-2 and
+  II-3 can describe the output mixture of the preceding step while a later
+  bracket operation selectively converts one member of that mixture.
+
+## Stereochemistry from Screenshots
+
+- Treat each solid wedge and hashed wedge as an explicit observation. Build an
+  atom/bond mapping table before writing a chiral SMILES. `@` and `@@` depend on
+  SMILES neighbour traversal order and cannot be selected from the apparent
+  screen direction alone.
+- Determine final 2D coordinates before generating wedge/dash bond directions.
+  If coordinates are rotated or mirrored, call RDKit's wedge assignment again
+  and inspect every stereo center. Never post-process a finished depiction by
+  mirroring it without re-wedging.
+- Validate both connectivity and the complete wedge/dash pattern in a tight
+  crop. For fused rings, one inverted wedge can change the relative
+  stereoisomer even when the ring orientation and atom labels look correct.
+- If the source draws an explicit short hashed bond to an H label, keep the
+  neighboring ring bond ordinary and use a semantic H-stereo overlay. Never
+  approximate a direct H wedge by making an arbitrary ring bond dashed.
+- If the source resolution does not establish a stereo mark, record the center
+  as uncertain and do not call the output publication-ready.
+
+## Conformations and Cage Scaffolds
+
+- Preserve a source-observed chair, boat, or envelope projection with explicit
+  2D coordinates. Do not replace a chair pyranose with a flat regular hexagon;
+  validate axial/equatorial substituent directions together with wedges.
+- Validate named cage scaffolds from their atom graph before selecting a 2D
+  projection. A BCP (bicyclo[1.1.1]pentane) contains two bridgeheads and three
+  distinct one-carbon bridges, so each of the three bridge carbons bonds to
+  both bridgeheads. It has no direct bridgehead bond and no terminal methyl.
+- For the conventional BCP view used in compact paper schemes, place one bridge
+  carbon above the bridgeheads and two below, then verify all six bridge bonds.
+  Reuse the exact cage coordinates in reactant and product.
+
 ## Matched Backbone Orientation
 
 - In a single reaction step, products should inherit the starting

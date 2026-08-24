@@ -14,11 +14,11 @@ import sys
 from rdkit import Chem
 from rdkit.Chem import rdDepictor
 
-SCRIPT_DIR = Path("/Users/yl/Desktop/skills/ChemKit/scripts")
+SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from chemkit_ocsr import OcsrCandidate
+from chemkit_model import MoleculeCandidate
 from chemkit_route_renderer import (
     Arrow,
     Label,
@@ -30,7 +30,7 @@ from chemkit_route_renderer import (
 )
 
 
-ROOT = Path("/Users/yl/Desktop/skills/ChemKit")
+ROOT = SCRIPT_DIR.parent
 OUT_DIR = ROOT / "examples"
 SVG = OUT_DIR / "20260702-oxetane-amide-coupling.svg"
 PNG = OUT_DIR / "20260702-oxetane-amide-coupling.png"
@@ -39,12 +39,12 @@ WIDTH = 1000
 HEIGHT = 280
 
 
-def candidate(key: str, smiles: str) -> OcsrCandidate:
+def candidate(key: str, smiles: str) -> MoleculeCandidate:
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         raise ValueError(f"Could not parse SMILES for {key}: {smiles}")
     rdDepictor.Compute2DCoords(mol)
-    return OcsrCandidate(
+    return MoleculeCandidate(
         key=key,
         mol=mol,
         source_smiles=smiles,

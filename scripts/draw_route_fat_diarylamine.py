@@ -16,7 +16,7 @@ SCRIPT_DIR = ROOT / "scripts"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from chemkit_ocsr import OcsrCandidate
+from chemkit_model import MoleculeCandidate
 from chemkit_route_renderer import (
     Label,
     MolPlace,
@@ -40,13 +40,13 @@ HEIGHT = 330
 STRUCTURE_Y = 125
 
 
-def candidate(key: str, smiles: str) -> OcsrCandidate:
+def candidate(key: str, smiles: str) -> MoleculeCandidate:
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         raise ValueError(f"Could not parse SMILES for {key}: {smiles}")
     Chem.SanitizeMol(mol)
     rdDepictor.Compute2DCoords(mol)
-    return OcsrCandidate(
+    return MoleculeCandidate(
         key=key,
         mol=mol,
         source_smiles=smiles,
@@ -178,7 +178,7 @@ def main() -> None:
     )
     write_svg(SVG, svg)
     if not screenshot_svg(SVG, PNG, WIDTH, HEIGHT):
-        raise RuntimeError("Google Chrome is required to render the PNG preview")
+        print("PNG export skipped; open the SVG with chemkit preview or the system browser.")
     print(SVG)
     print(PNG)
 

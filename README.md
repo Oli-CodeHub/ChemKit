@@ -1,8 +1,9 @@
 # ChemKit 1.0
 
-ChemKit 1.0 is a Codex skill and RDKit-based drawing toolkit for generating
-publication-style chemical reaction schemes with ChemDraw/ACS-like visual
-proportions.
+ChemKit 1.0 is a Codex/Agent skill and RDKit-based drawing toolkit for
+generating publication-style chemical reaction schemes with ChemDraw/ACS-like
+visual proportions. It is designed to be invoked directly by an Agent through
+deterministic scripts and a small command-line interface.
 
 The project started from a practical pain point: ChemDraw is excellent,
 but manual scheme layout is slow; RDKit is programmable, but raw output
@@ -28,59 +29,108 @@ workflow. It is designed for:
 - publication-style reaction schemes generated from RDKit structures;
 - ChemDraw-like route layout with fixed effective bond scale;
 - consistent atom labels, condition text, structure labels, arrows, and route spacing;
-- screenshot-derived structure redraws with explicit QC and confidence checks;
+- screenshot-derived structure redraws through Agent visual analysis with explicit QC;
 - reusable SVG/PNG examples and route-generation scripts.
 
-The 1.0 renderer is the default workflow. OCSR/image-recognition experiments
-remain documented as optional tooling and are not required for ordinary route
-generation.
+The 1.0 renderer is the default workflow. Screenshot input is handled by
+isolated crops interpreted by the Agent; automatic OCSR engines are not part
+of the skill's default path.
+
+## One-command installation
+
+From a downloaded or cloned ChemKit directory:
+
+```bash
+# macOS/Linux
+./install.sh
+
+# Windows PowerShell
+./install.ps1
+```
+
+The installer places the skill in the active Agent skills directory, creates
+an isolated `.venv`, and installs the ChemKit runtime dependencies. It supports
+`--target`/`-Target` for a custom skills directory and honors
+`CODEX_HOME`/`CODEX_SKILLS_DIR`. If the host has no Python (or `uv`), the
+installer stops with a clear bootstrap message; no installer can create an
+Agent runtime without at least one executable bootstrap tool.
+
+For an existing Python installation, the equivalent command is:
+
+```bash
+python scripts/install_chemkit.py
+```
 
 ## Quick Start
 
-Install Python dependencies in an isolated environment:
+Check the isolated environment:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+./bin/chemkit check
 ```
 
 Generate an example scheme with the 1.0 renderer:
 
 ```bash
-python scripts/draw_route_fat_amide_coupling.py
+./bin/chemkit run scripts/draw_route_fat_amide_coupling.py
 ```
 
 Outputs are written to `examples/`.
 
-## Local Web Prototype
-
-ChemKit includes a lightweight local web prototype:
+For screenshot-to-structure redraws, send individually cropped structures to
+the Agent and then run the ChemKit route script. The recommended crop rules
+are documented in `references/agent-screenshot-strategy.md`.
 
 ```bash
-python server.py
+./bin/chemkit run scripts/draw_agent_analyzed_structure_grid.py
 ```
 
-Then open:
+The final SVG contains ChemKit-rendered structures rather than the source
+pixels. Dense or ambiguous crops still require human confirmation before
+publication. The former OCSR scripts remain only as experimental diagnostics.
 
-```text
-http://127.0.0.1:8765/
+## CLI: what it is and why it exists
+
+CLI means **command-line interface**: a small, deterministic command that an
+Agent can call without opening a GUI or depending on a particular browser.
+ChemKit's CLI is intentionally narrow:
+
+```bash
+./bin/chemkit check
+./bin/chemkit run scripts/draw_route_fat_amide_coupling.py
+./bin/chemkit preview examples/20260819-fat-amide-coupling.svg
 ```
 
-The web backend can optionally use an OpenAI-backed parser when
-`OPENAI_API_KEY` is set. Without it, ChemKit falls back to a small local
-rule parser. The web prototype uses the same ChemKit 1.0 route-rendering
-rules.
+It is useful because it gives Agent workflows a stable entry point for
+environment checks, route-script execution, and opening generated files. It
+does not replace the ChemKit skill instructions; it removes the need for an
+Agent to guess Python paths or the user's checkout directory. The CLI is
+therefore recommended, but direct calls to the scripts remain supported.
+
+`preview` uses the operating system's default application. On macOS it can
+open Safari, Chrome, Firefox, or another installed browser; on Windows and
+Linux it uses the registered default browser/viewer. Chrome is not a
+requirement. Headless PNG conversion is optional and only used when a
+compatible browser executable is available.
+
+## Emphasis layer
+
+An Agent can turn requests such as “highlight the thioester in step 2 in red”
+into semantic selectors with `scripts/chemkit_emphasis.py`. The resolver maps
+functional-group or SMARTS selectors to explicit atom/bond indices, rejects
+ambiguous matches unless the user chooses one, and passes the result to the
+route renderer without changing the chemistry. See
+`scripts/draw_emphasis_demo.py` for a complete route example.
 
 ## Project Layout
 
 ```text
 SKILL.md                         Codex skill entrypoint
-scripts/                         RDKit renderers and example route scripts
+scripts/                         RDKit renderers, emphasis resolver, CLI, route, and promo scripts
 references/                      ChemKit drawing rules and accumulated notes
 examples/                        Generated SVG/PNG examples
-web/                             Lightweight reaction builder prototype
-social/                          Xiaohongshu promo-card generator and assets
+bin/                              Installed CLI wrappers
+install.sh / install.ps1         Cross-platform skill installers
 agents/                          Experimental agent metadata
 ```
 

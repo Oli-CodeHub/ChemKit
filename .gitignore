@@ -11,3 +11,15 @@ plugins/outputs/
 *.log
 .pytest_cache/
 dist/
+
+# Local/private template development assets.
+templates/
+scripts/build_scaffold_templates.py
+scripts/chemkit_review_server.py
+scripts/chemkit_templates.py
+scripts/draw_template_gallery.py
+scripts/validate_template_library.py
+tests/test_template_library.py
+
+# Local/generated work products; curated public renders belong in examples/.
+outputs/

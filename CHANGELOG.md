@@ -11,12 +11,19 @@ ChemKit 1.0 formally replaces the earlier prototype workflow.
   hierarchy.
 - Route-level placement based on visible molecule boundaries, including plus
   signs, arrows, conditions, and shared structure-label baselines.
+- Logical-infinite-canvas route layout with automatic content-bbox tightening:
+  final SVG/PNG crops whitespace without rescaling structures.
+- Optional semantic emphasis layer for coloring or thickening selected atoms,
+  bonds, functional groups, and route intermediates with auditable indices.
 - Dual-fragment orientation preservation for coupling products.
 - Stronger stereochemical wedges and improved SVG/PNG readability.
 - Reusable FAT route examples, Taxol/10-DAB high-intensity testing, and
   regression coverage for fixed-scale rendering.
 - 16:9 and 9:16 promotional graphics, including a ChemDraw vs ChemKit
   comparison.
+- Agent-first packaging: cross-platform one-command installers, an isolated
+  runtime, a deterministic CLI, repository-relative paths, and browser-
+  agnostic SVG preview. The unused local web prototype was removed.
 
 ### Migration
 

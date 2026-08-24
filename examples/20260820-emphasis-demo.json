@@ -1,0 +1,64 @@
+{
+  "requests": [
+    {
+      "molecules": [
+        "3w",
+        "2"
+      ],
+      "selector": {
+        "type": "functional_group",
+        "value": "thioester"
+      },
+      "mode": "bond",
+      "color": "red",
+      "bond_width_multiplier": 2.0,
+      "label": "thioester"
+    }
+  ],
+  "resolved_emphasis": {
+    "3w": [
+      {
+        "label": "thioester",
+        "atoms": [
+          0,
+          1,
+          11
+        ],
+        "bonds": [
+          0,
+          10
+        ],
+        "color": "#C62828",
+        "mode": "bond",
+        "bond_width_multiplier": 2.0
+      }
+    ],
+    "2": [
+      {
+        "label": "thioester",
+        "atoms": [
+          11,
+          12,
+          13
+        ],
+        "bonds": [
+          11,
+          12
+        ],
+        "color": "#C62828",
+        "mode": "bond",
+        "bond_width_multiplier": 2.0
+      }
+    ]
+  },
+  "tight_crop": {
+    "x": 108,
+    "y": 104,
+    "width": 1092,
+    "height": 446
+  },
+  "outputs": {
+    "svg": "/Users/yl/Desktop/skills/ChemKit/examples/20260820-emphasis-demo.svg",
+    "png": "/Users/yl/Desktop/skills/ChemKit/examples/20260820-emphasis-demo.png"
+  }
+}

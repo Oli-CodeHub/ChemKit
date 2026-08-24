@@ -21,7 +21,8 @@ from rdkit.Chem import rdDepictor
 from rdkit.Chem.Draw import rdMolDraw2D
 
 
-OUT = Path("/Users/yl/Desktop/skills/ChemKit/examples/20260625-route-citronellal-nepetalactone-v1.svg")
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "examples" / "20260625-route-citronellal-nepetalactone-v1.svg"
 FONT = "/System/Library/Fonts/Supplemental/Arial Black.ttf"
 
 TEMP_W = 1200

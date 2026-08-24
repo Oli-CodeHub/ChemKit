@@ -3,14 +3,16 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageEnhance
 
 
-SRC = Path("/var/folders/__/t65vg_bx3wg_3x16sx9x4b5w0000gn/T/codex-clipboard-f4ea7d7b-5538-4882-bf12-81fdfa0ac2b7.png")
-OUT = Path("/Users/yl/Desktop/skills/ChemKit/examples/20260626-taxol-reference-cleaned.png")
-SVG = Path("/Users/yl/Desktop/skills/ChemKit/examples/20260626-taxol-reference-cleaned.svg")
+ROOT = Path(__file__).resolve().parents[1]
+SRC = Path(os.environ.get("CHEMKIT_REFERENCE_IMAGE", ROOT / "examples" / "taxol-reference.png"))
+OUT = ROOT / "examples" / "20260626-taxol-reference-cleaned.png"
+SVG = ROOT / "examples" / "20260626-taxol-reference-cleaned.svg"
 
 
 def main() -> None:

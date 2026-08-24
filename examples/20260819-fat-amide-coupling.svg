@@ -3,6 +3,7 @@
 <style>
 text { font-family: "Arial Bold", Arial, Helvetica, sans-serif; font-weight: 700; fill: #000; stroke: #000; stroke-width: 0.00; paint-order: stroke fill; }
 .cond { font-size: 25.0px; }
+.repeat-paren, .repeat-n { font-family: "Arial Bold", Arial, Helvetica, sans-serif; font-weight: 400; fill: #000; stroke: none; }
 .yield { fill: #42517f; stroke: #42517f; font-weight: 700; }
 .num { font-size: 25.0px; font-weight: 700; }
 .qc { fill: #9d1b1b; stroke: #9d1b1b; font-size: 8.5px; font-weight: 700; }

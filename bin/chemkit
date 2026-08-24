@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+if [ -x "$ROOT/.venv/bin/python" ]; then
+  PYTHON="$ROOT/.venv/bin/python"
+elif command -v python3 >/dev/null 2>&1; then
+  PYTHON=$(command -v python3)
+elif command -v python >/dev/null 2>&1; then
+  PYTHON=$(command -v python)
+else
+  echo "ChemKit requires Python 3.9+; run install.sh or install Python first." >&2
+  exit 2
+fi
+exec "$PYTHON" "$ROOT/scripts/chemkit_cli.py" "$@"

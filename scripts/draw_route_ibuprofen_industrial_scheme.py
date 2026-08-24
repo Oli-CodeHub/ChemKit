@@ -13,11 +13,11 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from chemkit_ocsr import OcsrCandidate
+from chemkit_model import MoleculeCandidate
 from chemkit_route_renderer import Arrow, Label, MolPlace, chemdraw_compact_style, render_route_svg, screenshot_svg, write_svg
 
 
-ROOT = Path("/Users/yl/Desktop/skills/ChemKit")
+ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "examples"
 SVG = OUT_DIR / "20260719-ibuprofen-industrial-route.svg"
 PNG = OUT_DIR / "20260719-ibuprofen-industrial-route.png"
@@ -63,8 +63,8 @@ def align_to_reference(mol: Chem.Mol, reference: Chem.Mol) -> float:
     )
 
 
-def candidate_from_mol(key: str, mol: Chem.Mol) -> OcsrCandidate:
-    return OcsrCandidate(
+def candidate_from_mol(key: str, mol: Chem.Mol) -> MoleculeCandidate:
+    return MoleculeCandidate(
         key=key,
         mol=mol,
         source_smiles=Chem.MolToSmiles(mol, isomericSmiles=True),
