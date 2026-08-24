@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1 — 2026-08-24
+
+ChemKit 1.1 expands the stable renderer with improved route transcription,
+layout controls, and reusable Agent workflows.
+
+### Highlights
+
+- Improved reaction-condition centering and spacing across multi-step routes.
+- Refined structure orientation and functional-group label placement for more
+  conventional ChemDraw-like output.
+- Added Agent-assisted screenshot transcription guidance and QC examples.
+- Added reusable CLI/model/emphasis components and broader regression tests.
+- Added new publication-style route examples and cross-platform installation
+  improvements.
+
 ## 1.0 — 2026-08-20
 
 ChemKit 1.0 formally replaces the earlier prototype workflow.

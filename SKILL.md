@@ -1,16 +1,16 @@
 ---
 name: chemkit
-description: Use ChemKit 1.0 when drawing publication-style chemical structures or reaction schemes with RDKit/SVG/PDF/PNG output, especially when matching ACS/JACS/ChemDraw-like proportions without using the ChemDraw application.
+description: Use ChemKit 1.1 when drawing publication-style chemical structures or reaction schemes with RDKit/SVG/PDF/PNG output, especially when matching ACS/JACS/ChemDraw-like proportions without using the ChemDraw application.
 ---
 
-# ChemKit 1.0
+# ChemKit 1.1
 
-ChemKit 1.0 is the stable RDKit-first chemical drawing workflow. It complements the ChemDraw skill:
+ChemKit 1.1 is the stable RDKit-first chemical drawing workflow. It complements the ChemDraw skill:
 
 - Use ChemDraw when the required output is editable `.cdxml` or must be produced inside the local ChemDraw app.
 - Use ChemKit when the required output is RDKit-generated SVG/PDF/PNG or when testing a reusable automated drawing/layout engine.
 
-The 1.0 renderer is the default and supersedes the earlier prototype layout
+The 1.1 renderer is the default and supersedes the earlier prototype layout
 rules. New route work should use `scripts/chemkit_route_renderer.py` and the
 compact profile documented below.
 

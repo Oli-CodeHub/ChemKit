@@ -1,6 +1,6 @@
-# ChemKit 1.0
+# ChemKit 1.1
 
-ChemKit 1.0 is a Codex/Agent skill and RDKit-based drawing toolkit for
+ChemKit 1.1 is a Codex/Agent skill and RDKit-based drawing toolkit for
 generating publication-style chemical reaction schemes with ChemDraw/ACS-like
 visual proportions. It is designed to be invoked directly by an Agent through
 deterministic scripts and a small command-line interface.
@@ -21,10 +21,10 @@ chemical drawing preferences into reusable rendering rules.
 - Strengthens dashed wedge stereochemical bonds so they remain readable in PNG exports.
 - Provides examples and scripts for reusable scheme generation.
 
-## Version 1.0
+## Version 1.1
 
-ChemKit 1.0 is the first stable release of the reusable route-rendering
-workflow. It is designed for:
+ChemKit 1.1 builds on the stable reusable route-rendering workflow. It is
+designed for:
 
 - publication-style reaction schemes generated from RDKit structures;
 - ChemDraw-like route layout with fixed effective bond scale;
@@ -32,7 +32,7 @@ workflow. It is designed for:
 - screenshot-derived structure redraws through Agent visual analysis with explicit QC;
 - reusable SVG/PNG examples and route-generation scripts.
 
-The 1.0 renderer is the default workflow. Screenshot input is handled by
+The 1.1 renderer is the default workflow. Screenshot input is handled by
 isolated crops interpreted by the Agent; automatic OCSR engines are not part
 of the skill's default path.
 
@@ -69,7 +69,7 @@ Check the isolated environment:
 ./bin/chemkit check
 ```
 
-Generate an example scheme with the 1.0 renderer:
+Generate an example scheme with the 1.1 renderer:
 
 ```bash
 ./bin/chemkit run scripts/draw_route_fat_amide_coupling.py
@@ -136,7 +136,7 @@ agents/                          Experimental agent metadata
 
 ## Release
 
-The current release is **ChemKit 1.0**. See [CHANGELOG.md](CHANGELOG.md) for
+The current release is **ChemKit 1.1**. See [CHANGELOG.md](CHANGELOG.md) for
 the release summary and migration notes from the original prototype.
 
 ## License

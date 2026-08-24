@@ -126,7 +126,7 @@ def main() -> int:
         )
         return exc.returncode or 1
 
-    print(f"Installed ChemKit 1.0: {destination}")
+    print(f"Installed ChemKit 1.1: {destination}")
     command = "chemkit.cmd" if os.name == "nt" else "chemkit"
     print(f"Run: {destination / 'bin' / command} check")
     return 0

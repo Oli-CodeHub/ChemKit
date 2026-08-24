@@ -8,9 +8,9 @@ Layout (top-to-bottom):
                        in a 2x2 zigzag (1→2 / 2↓3 / 3→4)
     - Bottom band:     caption, "#chemkit" branding
 
-All four molecules are drawn with chemkit 1.0 chemdraw_compact_style
+All four molecules are drawn with chemkit 1.1 chemdraw_compact_style
 (Arial Bold 26pt, 2.05 bond width, fixed bond 25.5, drawn on a 1600x1000
-canvas then cropped to bbox), matching the chemkit 1.0 SKILL.md standard.
+canvas then cropped to bbox), matching the chemkit 1.1 SKILL.md standard.
 """
 
 from __future__ import annotations
@@ -284,7 +284,7 @@ def main() -> None:
   </div>
   <div class="title">Cyclic Amine Synthesis via Catalytic Radical–Polar Crossover Cycloadditions</div>
   <div class="authors">Y. Zhang, S.-S. Chen, K.-D. Li, H.-M. Huang<em>*</em></div>
-  <div class="affiliation">— redrawn with chemkit 1.0 —</div>
+  <div class="affiliation">— redrawn with chemkit 1.1 —</div>
   <div class="scheme">
     {cells_html}
     {arrow_12}
@@ -298,7 +298,7 @@ def main() -> None:
   </div>
   <div class="footer">
     <div class="caption">Stepwise α-methallylation → reduction → tosylation of 4-X-cyclohexanecarboxylate</div>
-    <div class="branding">DRAWN WITH CHEMKIT 1.0 · chemdraw_compact_style</div>
+    <div class="branding">DRAWN WITH CHEMKIT 1.1 · chemdraw_compact_style</div>
   </div>
 </body>
 </html>
